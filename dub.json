@@ -1,0 +1,8 @@
+{
+	"name": "weather",
+	"description": "A minimal D application.",
+	"copyright": "Copyright © 2014, chris",
+	"authors": ["chris"],
+	"dependencies": {
+	}
+}
