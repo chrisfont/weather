@@ -1,0 +1,15 @@
+*.obj
+*.build
+*.cmd
+*.lnkarg
+*.html
+*.dep
+*.map
+.dub/obj/debug/weather/weather_d.json
+dub.selections.json
+weather.sln
+weather.v12.suo
+weather.visualdproj
+*.exe
+*.exe_cv
+*.pdb
