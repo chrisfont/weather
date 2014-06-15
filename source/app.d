@@ -4,7 +4,7 @@ import conf;
 
 void main()
 {
-	config configuration = new config("config.json");
+    config configuration = new config("config.json");
 
     if ( configuration.load() )
         writeln(configuration.get_url_now());
