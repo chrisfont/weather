@@ -1,6 +1,8 @@
 module conf;
 
 import std.json;
+import std.conv;
+import std.file;
 import std.string;
 import std.datetime;
 
@@ -10,22 +12,37 @@ class config
 	private string api_key;
 	private string location;
 
-	private string config_file;
+	private string config_filename;
 
 	this()
 	{
+        // This is not a good way to initialize
 	}
+
+    this(string config_file)
+    {
+        config_filename = config_file;
+    }
 
 	public bool load()
 	{
-		if ( config_file.length )
+        bool loaded = false;
+        
+		if ( config_filename.length )
 		{
+            string config_doc = to!string(read(config_filename));
+            
+            if ( config_doc.length )
+            {
+                JSONValue json_doc = parseJSON(config_doc);
+                api_key = json_doc.object["api_key"].str;
+                location = json_doc.object["default_loc"].str;
 
+                loaded = ( api_key.length ) ? true : false;
+            }
 		}
-		else
-		{
-			return false;
-		}
+
+        return loaded;
 	}
 
 	public void set_api_key(string new_api_key)
