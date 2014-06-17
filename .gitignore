@@ -13,3 +13,4 @@ weather.visualdproj
 *.exe
 *.exe_cv
 *.pdb
+*.TMP
