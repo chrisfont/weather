@@ -2,12 +2,13 @@
  + Weather module contains definitions for the Forecast.io API's data 
  + structures. The weather_api_c class acts as an interface between
  + Forecast.io's servers and the data structure you wish to populate.
- ==============================================================================
+ +
  + Authors: Chris Font
  + Date: June 18, 2014
  + History: Initial structures added. Some data manipulation code populated in
  +          weather_api_c
  + License: Apache License 2.0 (Apache-2.0)
+ +
  +/
 module weather;
 

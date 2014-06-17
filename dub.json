@@ -1,8 +1,9 @@
 {
-	"name": "weather",
-	"description": "A minimal D application.",
-	"copyright": "Copyright © 2014, chris",
-	"authors": ["chris"],
-	"dependencies": {
-	}
+    "name": "weather",
+    "description": "A minimal D application.",
+    "copyright": "Copyright © 2014, chris",
+    "authors": ["chris"],
+    "dependencies": {
+        "ddox":  ">=0.9.22"
+    }
 }
