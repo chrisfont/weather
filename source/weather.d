@@ -52,11 +52,13 @@ class WeatherAPI
         parse_currently(forecast.currently, weather_json["currently"].get!Json);
     }
 
-    private void parse_currently(data_point_t dp, Json current_json)
+    // TODO: Add defined checking for values
+    private void parse_data_point(data_point_t dp, Json dp_json)
     {
-        dp.time = current_json["time"].get!double;
-        dp.summary = current_json["summary"].get!string;
-        switch (current_json["summary"].get!string)
+        dp.time    = dp_json["time"].get!double;
+        dp.summary = dp_json["summary"].get!string;
+        
+        switch (dp_json["summary"].get!string)
         {
         case "clear-day":
             dp.icon = icon_e.clear_day;
@@ -86,8 +88,18 @@ class WeatherAPI
             dp.icon = icon_e.partly_cloudy_day;
             break;
         case "partly-cloudy-night":
-            dp.icon = icon_e
+            dp.icon = icon_e.partly_cloudy_night;
+            break;
+        default:
+            dp.icon = icon_e.unknown_icon;
+            break;
         }
+
+        dp.sun.rise = dp_json["sunriseTime"].get!double;
+        dp.sun.set  = dp_json["sunsetTime"].get!double;
+
+        moon_phase  = dp_json["moonPhase"].get!double;
+
     }
 }
 
@@ -134,7 +146,8 @@ enum icon_e
     fog,
     cloudy,
     partly_cloudy_day,
-    partly_cloudy_night
+    partly_cloudy_night,
+    unknown_icon = 99
 }
 
 // TODO Refactor this...it's messy
