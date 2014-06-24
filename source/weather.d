@@ -14,28 +14,80 @@ module weather;
 
 import conf;
 
-import std.json;
+//import std.json;
 import std.conv;
 import std.container;
 import std.net.curl;
 
+import vibe.data.json;
+
 class WeatherAPI
 {
-    private config configuration;
+    private config     configuration;
+    public  forecast_t forecast;
 
     this(config new_config)
     {
         // This assumes a proper configuration is passed in at initialization
         configuration = new_config;
-        
-        // NOTE We could check initialization status here and deconstruct immediately
+        forecast      = null;
     }
 
     public void get_weather_now()
     {
         string request = to!string(get(configuration.get_url_now()));
 
-        JSONValue json = parseJSON(request);
+        parse(request);
+    }
+
+    private void parse(string req)
+    {
+        Json weather_json = parseJsonString(req);
+
+        forecast.latitude  = weather_json["latitude"].get!double;
+        forecast.longitude = weather_json["longitude"].get!double;
+        forecast.time      = weather_json["time"].get!double;
+        forecast.offset    = weather_json["offset"].get!double;
+
+        parse_currently(forecast.currently, weather_json["currently"].get!Json);
+    }
+
+    private void parse_currently(data_point_t dp, Json current_json)
+    {
+        dp.time = current_json["time"].get!double;
+        dp.summary = current_json["summary"].get!string;
+        switch (current_json["summary"].get!string)
+        {
+        case "clear-day":
+            dp.icon = icon_e.clear_day;
+            break;
+        case "clear-night":
+            dp.icon = icon_e.clear_night;
+            break;
+        case "rain":
+            dp.icon = icon_e.rain;
+            break;
+        case "snow":
+            dp.icon = icon_e.snow;
+            break;
+        case "sleet":
+            dp.icon = icon_e.sleet;
+            break;
+        case"wind":
+            dp.icon = icon_e.wind;
+            break;
+        case "fog":
+            dp.icon = icon_e.fog;
+            break;
+        case "cloudy":
+            dp.icon = icon_e.cloudy;
+            break;
+        case "partly-cloudy-day":
+            dp.icon = icon_e.partly_cloudy_day;
+            break;
+        case "partly-cloudy-night":
+            dp.icon = icon_e
+        }
     }
 }
 

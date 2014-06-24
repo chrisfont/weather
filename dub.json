@@ -4,6 +4,7 @@
     "copyright": "Copyright © 2014, chris",
     "authors": ["chris"],
     "dependencies": {
-        "ddox":  ">=0.9.22"
+        "ddox":  ">=0.9.22",
+        "vibe-d": "0.7.20"
     }
 }
